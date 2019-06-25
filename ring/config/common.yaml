@@ -1,0 +1,6 @@
+config:
+  serviceName: "diamond-rings"
+  majorVersion: "v1"
+  ringName: "master"
+  group: "CORE"
+  contact: samiya@testing.com
