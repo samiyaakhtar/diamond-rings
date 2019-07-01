@@ -17,7 +17,7 @@ steps:
 - bash: |
     echo "SourceBranchName = $(Build.SourceBranchName)"
     echo "SourceBranch = $(Build.SourceBranch)"
-    branch_name_extracted=$(echo "${SourceBranch/refs\/head\//}")
+    branch_name_extracted=${SourceBranch/refs\/head\//}
     echo '##vso[task.setvariable variable=branchname]$branch_name_extracted'
     echo "Setting branchname to $branch_name_extracted"
     echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
