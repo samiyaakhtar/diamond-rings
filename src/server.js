@@ -12,7 +12,7 @@ const app = express();
 app.get(PATH, (req, res) => {
   const ringHeader = req.header('x-ring');
 
-  res.send(`Hello from the ${ringHeader} ring. These are diamond rings.`);
+  res.send(`Hello from the ${ringHeader} ring. These are diamond rings, but testable!`);
 });
 
 app.listen(PORT, HOST);

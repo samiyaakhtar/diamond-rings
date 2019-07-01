@@ -1,6 +1,6 @@
 config:
-  serviceName: "diamond-rings"
+  serviceName: "diamond-rings-unittest"
   majorVersion: "v1"
-  ringName: "master"
+  ringName: "unittest"
   group: "CORE"
-  contact: samiya@testing.com
+  contact: samiya@unittester.com
