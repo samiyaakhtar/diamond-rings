@@ -18,14 +18,14 @@ steps:
     echo "SourceBranchName = $(Build.SourceBranchName)"
     echo "SourceBranch = $(Build.SourceBranch)"
     branch_name_extracted=$(echo "${SourceBranch/refs\/head\// }")
-    echo '##vso[task.setvariable variable=BRANCH_NAME]$branch_name_extracted'
-    echo "$BRANCH_NAME $(BRANCH_NAME)"
+    echo '##vso[task.setvariable variable=branchname]$branch_name_extracted'
+    echo "$branchname $(branchname)"
     echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
   displayName: Extract branch name
 
 - script: |
     echo my pipeline variable is $(sauce)
-    echo my other variable is $(BRANCH_NAME)
+    echo my other variable is $(branchname)
   displayName: Test
 
 - task: Docker@2
