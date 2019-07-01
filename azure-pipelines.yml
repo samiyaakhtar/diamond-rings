@@ -27,7 +27,7 @@ steps:
     repository: 'diamondrings'
     command: 'buildAndPush'
     Dockerfile: '**/src/Dockerfile'
-    tags: 'diamond-rings-$branch_name_extracted-$(Build.BuildId)'
+    tags: 'diamond-rings-$BRANCH_NAME-$(Build.BuildId)'
   condition: ne(variables['Build.Reason'], 'PullRequest')
   env:
     BRANCH_NAME: $(BRANCH_NAME)
