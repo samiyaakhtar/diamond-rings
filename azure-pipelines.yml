@@ -19,6 +19,7 @@ steps:
     echo "SourceBranch = $(Build.SourceBranch)"
     branch_name_extracted=$(echo "${SourceBranch/refs\/head\// }")
     echo "##vso[task.setvariable variable=BRANCH_NAME;]$branch_name_extracted"
+    echo "$BRANCH_NAME $(BRANCH_NAME)"
   displayName: Extract branch name
   
 - task: Docker@2
