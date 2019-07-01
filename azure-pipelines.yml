@@ -14,7 +14,7 @@ steps:
   persistCredentials: true
   clean: true
 
-- bash: |
+- script: |
     echo "SourceBranchName = $(Build.SourceBranchName)"
     echo "SourceBranch = $(Build.SourceBranch)"
     branch_name_extracted=$(echo "${SourceBranch/refs\/head\// }")
