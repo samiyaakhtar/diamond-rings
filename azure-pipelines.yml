@@ -17,6 +17,7 @@ steps:
 - bash: |
     echo "SourceBranchName = $(Build.SourceBranchName)"
     echo "SourceBranch = $(Build.SourceBranch)"
+    branch_name_extracted=$(echo "${SourceBranch/refs\/head\// }")
   displayName: Extract branch name
   
 - task: Docker@2
@@ -25,5 +26,5 @@ steps:
     repository: 'diamondrings'
     command: 'buildAndPush'
     Dockerfile: '**/src/Dockerfile'
-    tags: 'diamond-rings-$(Build.SourceBranchName)-$(Build.BuildId)'
+    tags: 'diamond-rings-$branch_name_extracted-$(Build.BuildId)'
   condition: ne(variables['Build.Reason'], 'PullRequest')
