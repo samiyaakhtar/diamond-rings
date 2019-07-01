@@ -14,7 +14,7 @@ steps:
   persistCredentials: true
   clean: true
 
-- script: |
+- bash: |
     echo "SourceBranchName = $(Build.SourceBranchName)"
     echo "SourceBranch = $(Build.SourceBranch)"
     branch_name_extracted=$(echo "${SourceBranch/refs\/head\//}")
@@ -24,7 +24,7 @@ steps:
     echo "Setting sauce to $sauce"
   displayName: Extract branch name
 
-- script: |
+- bash: |
     echo my pipeline variable is $(sauce)
     echo my other variable is $(branchname)
   displayName: Test
