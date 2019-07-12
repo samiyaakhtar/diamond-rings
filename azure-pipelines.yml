@@ -23,8 +23,8 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'diamondrings_acr'
-    repository: 'diamondrings'
+    repository: 'hellobedrock'
     command: 'buildAndPush'
     Dockerfile: '**/src/Dockerfile'
-    tags: 'diamond-rings-$(Build.SourceBranchName)-$(Build.BuildId)'
+    tags: 'hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)'
   condition: ne(variables['Build.Reason'], 'PullRequest')
