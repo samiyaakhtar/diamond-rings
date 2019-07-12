@@ -33,8 +33,10 @@ steps:
     echo "Starting post-task for commit $(Build.SourceVersion) buildId $(Build.BuildId)"
     echo '##vso[task.setvariable variable=p1]$(Build.BuildId)'
     echo '##vso[task.setvariable variable=commitId]$(Build.SourceVersion)'
+    echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
   displayName: Set Container Journey variables
 
 - bash: |
-    echo "Modified variables to $commitId $p1"
+    echo "Modified variables to $(commitId) $(p1)"
+    echo "$(sauce)"
   displayName: Verification of new variables
