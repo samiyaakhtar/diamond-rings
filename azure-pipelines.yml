@@ -28,3 +28,13 @@ steps:
     Dockerfile: '**/src/Dockerfile'
     tags: 'hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)'
   condition: ne(variables['Build.Reason'], 'PullRequest')
+
+- bash: |
+    echo "Starting post-task for commit $(Build.SourceVersion) buildId $(Build.BuildId)"
+    echo '##vso[task.setvariable variable=p1]$(Build.BuildId)'
+    echo '##vso[task.setvariable variable=commitId]$(Build.SourceVersion)'
+  displayName: Set Container Journey variables
+
+- bash: |
+    echo "Modified variables to $commitId $p1"
+  displayName: Verification of new variables
