@@ -1,4 +1,4 @@
-name: diamond-rings
+name: hello-rings
 source: https://github.com/bnookala/hello-rings-helm
 type: helm
 method: git
