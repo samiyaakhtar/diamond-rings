@@ -34,7 +34,7 @@ steps:
     echo "uuidgen"
     uuidgen
     row_key=$(python -c 'import uuid; print str(uuid.uuid1())')
-    tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)""
+    tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)"
     az storage entity insert --entity PartitionKey=ff55c9d7-4d7e-4072-bd27 RowKey=$row_key commitId=$(Build.SourceBranchName) p1=$(Build.BuildId) imageTag=$tag_name --table-name deployments --account-name saakhtacjteststorage --account-key $ACCOUNT_KEY
   displayName: Set Container Journey variables in database
   env:
