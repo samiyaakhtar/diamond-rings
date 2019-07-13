@@ -31,6 +31,8 @@ steps:
 
 - bash: |
     echo "Starting post-task for commit $(Build.SourceVersion) buildId $(Build.BuildId)"
+    echo "uuidgen"
+    uuidgen
     row_key=$(echo ${$(uuidgen)##*-})
     tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)""
     az storage entity insert --entity PartitionKey=ff55c9d7-4d7e-4072-bd27 RowKey=$row_key commitId=$(Build.SourceBranchName) p1=$(Build.BuildId) imageTag=$tag_name --table-name deployments --account-name saakhtacjteststorage --account-key $ACCOUNT_KEY
