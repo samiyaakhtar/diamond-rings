@@ -31,12 +31,8 @@ steps:
 
 - bash: |
     echo "Starting post-task for commit $(Build.SourceVersion) buildId $(Build.BuildId)"
-    echo '##vso[task.setvariable variable=p1]$(Build.BuildId)'
-    echo '##vso[task.setvariable variable=commitId]$(Build.SourceVersion)'
-    echo '##vso[task.setvariable variable=sauce]crushed tomatoes'
-  displayName: Set Container Journey variables
-
-- bash: |
-    echo "Modified variables to $(commitId) $(p1)"
-    echo "$(sauce)"
-  displayName: Verification of new variables
+    row_key=$(echo ${$(uuidgen)##*-})
+    az storage entity insert --entity PartitionKey=ff55c9d7-4d7e-4072-bd27 RowKey=$row_key commitId=$(Build.SourceBranchName) p1=$(Build.BuildId) --table-name deployments --account-name saakhtacjteststorage --account-key $ACCOUNT_KEY
+  displayName: Set Container Journey variables in database
+  env:
+    ACCOUNT_KEY: $(ACCOUNT_KEY)
