@@ -36,6 +36,7 @@ steps:
     commitId=$(Build.SourceVersion)
     commitId=$(echo "${commitId:0:7}")
     row_key=$(python -c 'import uuid; print str(uuid.uuid1())')
+    row_key=$(echo ${row_key##*-})
     tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)"
     az storage entity insert --entity PartitionKey=ff55c9d7-4d7e-4072-bd27 RowKey=$row_key commitId=$(Build.SourceVersion) p1=$(Build.BuildId) imageTag=$tag_name --table-name deployments --account-name saakhtacjteststorage --account-key $ACCOUNT_KEY
   displayName: Set Container Journey variables in database
