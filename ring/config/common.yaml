@@ -1,6 +1,6 @@
 config:
-  serviceName: "diamond-rings"
+  serviceName: "hello-bedrock"
   majorVersion: "v1"
   ringName: "master"
   group: "CORE"
-  contact: samiya@testing.com
+  contact: samiya@containerjourney.com
