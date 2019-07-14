@@ -2,5 +2,5 @@ config:
   serviceName: "hello-bedrock"
   majorVersion: "v1"
   ringName: "master"
-  group: "CORE"
+  group: "AWESOME"
   contact: samiya@containerjourney.com
