@@ -20,15 +20,6 @@ steps:
     branch_name_extracted=$(echo "${SourceBranch/refs\/head\// }")
   displayName: Extract branch name
   
-- task: Docker@2
-  inputs:
-    containerRegistry: 'hellobedrock_acr'
-    repository: 'hellobedrock'
-    command: 'buildAndPush'
-    Dockerfile: '**/src/Dockerfile'
-    tags: 'hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)'
-  condition: ne(variables['Build.Reason'], 'PullRequest')
-
 - bash: |
     git clone https://github.com/samiyaakhtar/container-journey.git
     cd container-journey
@@ -49,3 +40,12 @@ steps:
     echo "python update_pipeline.py $(ACCOUNT_NAME) $(ACCOUNT_KEY) $(TABLE_NAME) hello-bedrock p1 $(Build.BuildId) imageTag $tag_name commitId $commitId"
     python update_pipeline.py $(ACCOUNT_NAME) $(ACCOUNT_KEY) $(TABLE_NAME) hello-bedrock p1 $(Build.BuildId) imageTag $tag_name commitId $commitId 
   displayName: Update source pipeline details in CJ db
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'hellobedrock_acr'
+    repository: 'hellobedrock'
+    command: 'buildAndPush'
+    Dockerfile: '**/src/Dockerfile'
+    tags: 'hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)'
+  condition: ne(variables['Build.Reason'], 'PullRequest')
