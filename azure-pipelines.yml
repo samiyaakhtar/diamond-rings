@@ -43,8 +43,8 @@ steps:
     tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)"
     commitId=$(Build.SourceVersion)
     commitId=$(echo "${commitId:0:7}")
-    echo '{"account_key": $(ACCOUNT_KEY), "account_name": $(ACCOUNT_NAME), "table_name": $(TABLE_NAME), "partition_key": $(PARTITION_KEY), "filter_name": "p1", "filter_value": $(Build.BuildId), "name1": "imageTag", "value1": $tag_name, "name2": "commitId", "value2": $commitId }'
-    curl https://spektateprototypefunc.azurewebsites.net/api/UpdatePipelineStorage  --request POST  --header "Content-type: application/json"  --data '{"account_key": "$(ACCOUNT_KEY)", "account_name": "$(ACCOUNT_NAME)", "table_name": "$(TABLE_NAME)", "partition_key": "$(PARTITION_KEY)", "filter_name": "p1", "filter_value": "$(Build.BuildId)", "name1": "imageTag", "value1": "$tag_name", "name2": "commitId", "value2": "$commitId" }'
+    echo '{"account_key": $(ACCOUNT_KEY), "account_name": $(ACCOUNT_NAME), "table_name": $(TABLE_NAME), "partition_key": $(PARTITION_KEY), "filter_name": "p1", "filter_value": $(Build.BuildId), "name1": "imageTag", "value1": $(tag_name), "name2": "commitId", "value2": $(commitId) }'
+    curl https://spektateprototypefunc.azurewebsites.net/api/UpdatePipelineStorage  --request POST  --header "Content-type: application/json"  --data '{"account_key": "$(ACCOUNT_KEY)", "account_name": "$(ACCOUNT_NAME)", "table_name": "$(TABLE_NAME)", "partition_key": "$(PARTITION_KEY)", "filter_name": "p1", "filter_value": "$(Build.BuildId)", "name1": "imageTag", "value1": "$(tag_name)", "name2": "commitId", "value2": "$(commitId)" }'
   displayName: Update source pipeline details in Spektate
 
 - task: Docker@2
