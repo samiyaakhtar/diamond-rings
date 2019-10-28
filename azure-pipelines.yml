@@ -39,18 +39,35 @@ steps:
 #     python update_pipeline.py $(ACCOUNT_NAME) $(ACCOUNT_KEY) $(TABLE_NAME) $(PARTITION_KEY) p1 $(Build.BuildId) imageTag $tag_name commitId $commitId 
 #   displayName: Update source pipeline details in CJ db
 
+# - bash: |
+#     tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)"
+#     commitId=$(Build.SourceVersion)
+#     commitId=$(echo "${commitId:0:7}")
+#     service=$(Build.Repository.Name)
+#     service=${service##*/}
+#     all_data="{\"account_key\": \"$(ACCOUNT_KEY)\", \"account_name\": \"$(ACCOUNT_NAME)\", \"table_name\": \"$(TABLE_NAME)\", \"partition_key\": \"$(PARTITION_KEY)\", \"filter_name\": \"p1\", \"filter_value\": \"$(Build.BuildId)\", \"name1\": \"imageTag\", \"value1\": \"$tag_name\", \"name2\": \"commitId\", \"value2\": \"$commitId\", \"name3\": \"service\", \"value3\": \"$service\" }"
+#     echo $all_data
+#     echo "curl https://spektateprototypefunc.azurewebsites.net/api/UpdatePipelineStorage  --request POST  --header \"Content-type: application/json\"  --data $all_data"
+#     curl https://spektateprototypefunc.azurewebsites.net/api/UpdatePipelineStorage  --request POST  --header "Content-type: application/json"  --data "$all_data"
+#   displayName: Update source pipeline details in Spektate
 - bash: |
     tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)"
     commitId=$(Build.SourceVersion)
     commitId=$(echo "${commitId:0:7}")
-    service=$(Build.Repository.Name)
-    service=${service##*/}
-    all_data="{\"account_key\": \"$(ACCOUNT_KEY)\", \"account_name\": \"$(ACCOUNT_NAME)\", \"table_name\": \"$(TABLE_NAME)\", \"partition_key\": \"$(PARTITION_KEY)\", \"filter_name\": \"p1\", \"filter_value\": \"$(Build.BuildId)\", \"name1\": \"imageTag\", \"value1\": \"$tag_name\", \"name2\": \"commitId\", \"value2\": \"$commitId\", \"name3\": \"service\", \"value3\": \"$service\" }"
-    echo $all_data
-    echo "curl https://spektateprototypefunc.azurewebsites.net/api/UpdatePipelineStorage  --request POST  --header \"Content-type: application/json\"  --data $all_data"
-    curl https://spektateprototypefunc.azurewebsites.net/api/UpdatePipelineStorage  --request POST  --header "Content-type: application/json"  --data "$all_data"
-  displayName: Update source pipeline details in Spektate
+    # VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/CatalystCode/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
+    # echo "Downloading SPK version $VERSION_TO_DOWNLOAD" && wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
+    
+    git clone https://github.com/CatalystCode/spk.git
+    cd spk
+    git checkout 704-pipeline-update-command
+    yarn
+    yarn build
+    cd dist
+    chmod +x ./spk-linux
 
+    ./spk-linux deployment create -n $(ACCOUNT_NAME) -k $(ACCOUNT_KEY) -t $(TABLE_NAME) -p $(PARTITION_KEY) --filter-name p1 --filter-value $(Build.BuildId) --image-tag $tag_name --commit-id $commitId --service $(Build.Repository.Name)
+  displayName: Update manifest pipeline details in CJ db
+  
 - task: Docker@2
   inputs:
     containerRegistry: 'hellorings_acr'
