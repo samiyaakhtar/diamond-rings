@@ -54,6 +54,8 @@ steps:
     tag_name="hello-bedrock-$(Build.SourceBranchName)-$(Build.BuildId)"
     commitId=$(Build.SourceVersion)
     commitId=$(echo "${commitId:0:7}")
+    service=$(Build.Repository.Name)
+    service=${service##*/}
     # VERSION_TO_DOWNLOAD=$(curl -s "https://api.github.com/repos/CatalystCode/spk/releases/latest" | grep "tag_name" | sed -E 's/.*"([^"]+)".*/\1/')
     # echo "Downloading SPK version $VERSION_TO_DOWNLOAD" && wget "https://github.com/CatalystCode/spk/releases/download/$VERSION_TO_DOWNLOAD/spk-linux"
     
@@ -65,7 +67,7 @@ steps:
     cd dist
     chmod +x ./spk-linux
 
-    ./spk-linux deployment create -n $(ACCOUNT_NAME) -k $(ACCOUNT_KEY) -t $(TABLE_NAME) -p $(PARTITION_KEY) --filter-name p1 --filter-value $(Build.BuildId) --image-tag $tag_name --commit-id $commitId --service $(Build.Repository.Name)
+    ./spk-linux deployment create -n $(ACCOUNT_NAME) -k $(ACCOUNT_KEY) -t $(TABLE_NAME) -p $(PARTITION_KEY) --filter-name p1 --filter-value $(Build.BuildId) --image-tag $tag_name --commit-id $commitId --service $service
   displayName: Update manifest pipeline details in CJ db
   
 - task: Docker@2
