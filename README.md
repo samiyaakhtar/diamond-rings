@@ -1,2 +1,2 @@
 # hello-bedrock
-Source repository for a test application for [container journey](https://github.com/samiyaakhtar/container-journey)
+Source repository for a test application for [spektate](https://github.com/microsoft/spektate)
